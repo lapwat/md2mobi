@@ -1,6 +1,6 @@
 # md2mobi
 
-A Docker container to convert Markdown files to Mobi files for Amazon Kindle.
+Convert Markdown files to Mobi files for Amazon Kindle.
 
 ## Run
 
