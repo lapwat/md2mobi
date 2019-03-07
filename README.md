@@ -4,7 +4,7 @@ Convert Markdown files to Mobi files for Amazon Kindle.
 
 ## Run
 
-Run this command with custom `title` and `author`.
+Run this command with specifying `TITLE` and `AUTHOR` as environment variables.
 
 ```sh
 $ cat your_ebook.md | docker run -i -e TITLE="A title" -e AUTHOR="An author" lapwat/md2mobi > your_ebook.mobi
