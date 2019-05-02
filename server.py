@@ -22,7 +22,10 @@ class HTTPRequestHandler(server.SimpleHTTPRequestHandler):
     # convert file
     title = form['title'].value
     author = form['author'].value
-    os.system(f'./convert.sh "{file_path}" "{title}" "{author}"')
+    file_path = file_path.replace('$', '-')
+    title = title.replace('$', '-')
+    author = author.replace('$', '-')
+    os.system(f"./convert.sh '{file_path}' '{title}' '{author}'")
 
     # craft response with mobi file
     self.send_response(200)
