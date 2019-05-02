@@ -1,7 +1,9 @@
-version: '3'
-
+version: '2'
 services:
   md2mobi:
     build: .
-    ports:
-      - 80:8000
+    labels:
+      - "traefik.backend=md2mobi"
+      - "traefik.frontend.rule=Host:md2mobi.lapw.at"
+      - "traefik.port=8000"
+      - "traefik.enable=true"
