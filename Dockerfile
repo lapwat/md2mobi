@@ -13,7 +13,13 @@ RUN curl http://kindlegen.s3.amazonaws.com/kindlegen_linux_2.6_i386_v2_9.tar.gz 
 FROM python:alpine
 ARG PANDOC_VERSION
 
-COPY --from=builder pandoc-${PANDOC_VERSION}/bin/pandoc kindlegen ./
-COPY . .
+RUN addgroup -S user && adduser -S user -G user
+
+USER user
+WORKDIR /home/user
+
+COPY --from=builder pandoc-${PANDOC_VERSION}/bin/pandoc kindlegen /usr/local/bin/
+COPY server.py convert.sh ./
+COPY html html
 
 ENTRYPOINT ["python", "server.py"]
