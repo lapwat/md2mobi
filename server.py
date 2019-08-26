@@ -3,27 +3,18 @@ import os
 import http.server as server
 import cgi
 from datetime import datetime
-# from mailjet_rest import Client
+from mailjet_rest import Client
 import base64
 # import markdown2
 
 class HTTPRequestHandler(server.SimpleHTTPRequestHandler):
   @staticmethod
   def email_file(email, filename):
-    # # convert to html
-    # html_content = str(markdown2.markdown_path(f'../uploads/{filename}'))
-    # print(type(html_content))
-    # f = open('test.html', 'w')
-    # f.write(html_content.encode('utf8'))
-    # f.close()
+    # convert to base64
+    with open(f'../uploads/ebook.mobi', "rb") as fd:
+      b64content = base64.b64encode(fd.read()).decode('ascii')
 
-    with open(f'../uploads/{filename}', "rb") as fd:
-      content = base64.b64encode(fd.read())
-
-    b64content = str(base64.b64encode(content))
-    filename = os.path.splitext(filename)[0] + '.mobi'
-
-    # send html
+    # send by email
     api_key = os.environ['API_KEY']
     api_secret = os.environ['API_SECRET']
     mailjet = Client(auth=(api_key, api_secret), version='v3.1')
@@ -36,15 +27,15 @@ class HTTPRequestHandler(server.SimpleHTTPRequestHandler):
           },
           "To": [
             {
-              "Email": "q.lapointe@gmail.com",
-              "Name": "Quentin"
+              "Email": email,
+              "Name": "Md2mobi User"
             }
           ],
-          "Subject": "",#"md2mobi",
-          "TextPart": "",#"Thank you for using Md2mobi. Please find enclose your file converted to MOBI.",
+          "Subject": "md2mobi",
+          "TextPart": "Thank you for using Md2mobi. Please find enclosed your file converted to MOBI.",
           "Attachments": [
             {
-              "ContentType": "text/plain",
+              "ContentType": "application/x-mobipocket-ebook",
               "Filename": filename,
               "Base64Content": b64content
             }
@@ -53,7 +44,6 @@ class HTTPRequestHandler(server.SimpleHTTPRequestHandler):
       ]
     }
     result = mailjet.send.create(data=data)
-    print(result.json())
 
   def do_POST(self):
     # save markdown file
@@ -91,7 +81,7 @@ class HTTPRequestHandler(server.SimpleHTTPRequestHandler):
     if ('email' in form.keys()):
       email = form['email'].value
       # send to kindle
-      # self.email_file(email, filename)
+      self.email_file(email, converted_filename)
     else:
       # craft response with mobi file
       self.send_response(200)
