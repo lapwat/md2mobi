@@ -3,9 +3,9 @@ import os
 import http.server as server
 import cgi
 from datetime import datetime
-from mailjet_rest import Client
+# from mailjet_rest import Client
 import base64
-import markdown2
+# import markdown2
 
 class HTTPRequestHandler(server.SimpleHTTPRequestHandler):
   @staticmethod
