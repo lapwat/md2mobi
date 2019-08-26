@@ -53,8 +53,7 @@ class HTTPRequestHandler(server.SimpleHTTPRequestHandler):
       ]
     }
     result = mailjet.send.create(data=data)
-    print(result.json())ls
-    rm -
+    print(result.json())
 
   def do_POST(self):
     # save markdown file
