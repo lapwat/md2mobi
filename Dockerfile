@@ -19,8 +19,13 @@ USER user
 WORKDIR /home/user
 
 COPY --from=builder pandoc-${PANDOC_VERSION}/bin/pandoc kindlegen /usr/local/bin/
-COPY html html
-COPY server.py convert.sh requirements.txt ./
 
+# Python environment
+COPY requirements.txt .
 RUN pip install --user -r requirements.txt
+
+# scripts and static
+COPY server.py convert.sh ./
+COPY html html
+
 ENTRYPOINT ["python", "server.py"]
