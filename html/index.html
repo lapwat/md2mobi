@@ -46,6 +46,14 @@
 					}
 
 				}
+				function checkSent() {
+					const urlParams = new URLSearchParams(window.location.search);
+					const status = urlParams.get('status');
+					if (status === 'sent') {
+						var sent = document.getElementById("sent");
+						sent.style.display = "block";
+					}
+				}
 			</script>
 	</head>
 	<body id="fullsingle" class="page-template-page-fullsingle-split">
@@ -82,6 +90,10 @@
 								<button id="submitButton" type="submit">Convert</button>
 							</form>
 						</p>
+						<div id="sent" style="display: none;margin-top: 10px;" class="alert">
+							<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+							The Markdown file has been sent to your email kindle.
+						</div> 
 					</div>
 					<div class="split-lists">
 						<!-- <div class="split-list">
@@ -128,6 +140,7 @@
 		</div>
 	</body>
 	<script>
+		checkSent()
 		uploadMethodChanged()
 		downloadMethodChanged()
 	</script>

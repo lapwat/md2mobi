@@ -78,10 +78,13 @@ class HTTPRequestHandler(server.SimpleHTTPRequestHandler):
     os.system(f"sh ../convert.sh '{filename}' '{title}' '{author}'")
 
     converted_filename = os.path.splitext(filename)[0] + '.mobi'
-    if ('email' in form.keys()):
-      email = form['email'].value
+    email = form['email'].value
+    if (email):
       # send to kindle
       self.email_file(email, converted_filename)
+      self.send_response(301)
+      self.send_header('Location','?status=sent')
+      self.end_headers()
     else:
       # craft response with mobi file
       self.send_response(200)
