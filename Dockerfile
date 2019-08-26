@@ -19,7 +19,8 @@ USER user
 WORKDIR /home/user
 
 COPY --from=builder pandoc-${PANDOC_VERSION}/bin/pandoc kindlegen /usr/local/bin/
-COPY server.py convert.sh ./
+COPY server.py convert.sh requirements.txt ./
 COPY html html
 
+RUN pip install -r requirements.txt
 ENTRYPOINT ["python", "server.py"]

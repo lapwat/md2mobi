@@ -15,6 +15,38 @@
 		<link rel="icon" type="image/png" href="images/favicon.png" sizes="32x32">
 		<link rel='stylesheet' href='style.css' type='text/css' media='screen' />
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<script>
+				function uploadMethodChanged() {
+					// Get the checkbox
+					var checkBox = document.getElementById("fileUpload");
+					var uploadButton = document.getElementById("uploadButton");
+					var textArea = document.getElementById("textArea");
+		
+					// If the checkbox is checked, display the upload button
+					if (checkBox.checked == true){
+						uploadButton.style.display = "block";
+						textArea.style.display = "none";
+					} else {
+						textArea.style.display = "block";
+						uploadButton.style.display = "none";
+					}
+				}
+				function downloadMethodChanged() {
+					// Get the checkbox
+					var checkBox = document.getElementById("sendtoKindle");
+					var email = document.getElementById("email");
+		
+					// If the checkbox is checked, display the output text
+					if (checkBox.checked == true){
+						email.style.display = "block";
+						document.getElementById("submitButton").innerText = "Send"
+					} else {
+						email.style.display = "none";
+						document.getElementById("submitButton").innerText = "Download MOBI"
+					}
+
+				}
+			</script>
 	</head>
 	<body id="fullsingle" class="page-template-page-fullsingle-split">
 		<div class="fs-split">
@@ -29,11 +61,25 @@
 						<p>This tool lets you convert Markdown files to Amazon Kindle compatible files.</p>
 						<br/>
 						<p>
+							<!-- direct download -->
 							<form enctype="multipart/form-data" action="/" method="post">
-									<input required type="text" name="title" placeholder="Title" />
-									<input required type="text" name="author" placeholder="Author" />
-							    <input required type="file" name="file" />
-							    <button type="submit">Convert</button>
+								<!-- metadata -->
+								<input style="width: 46%" required type="text" name="title" placeholder="Title" />
+								<input style="width: 46%" required type="text" name="author" placeholder="Author" /><br/>
+								<br/>
+
+								<!-- data -->
+								<textarea placeholder="Paste your Markdown text here" rows="5" style="width: 100%" name="file" id="textArea" name="text"></textarea>
+								<input id="uploadButton" type="file" name="file" />
+								<input type="checkbox" id="fileUpload" onclick="uploadMethodChanged()" /> Upload Mardown file<br/>
+								<br/>
+								
+								<!-- send to Kindle -->
+								<!-- <input style="display:none" type="checkbox" id="sendtoKindle" onclick="downloadMethodChanged()" /> Send to Kindle<br/> -->
+								<!-- <input style="display:none" placeholder="@kindle.com email address" id="email" type="email" name="email" /> -->
+								<br/>
+
+								<button id="submitButton" type="submit">Convert</button>
 							</form>
 						</p>
 					</div>
@@ -75,10 +121,14 @@
 						</div> -->
 					</div>
 					<div class="split-credit">
-						<p>&copy;2019 Made with <span style="color: red">❤️</span> by lapwat</p>
+						<p>&copy;2019 Made with <span style="color: red">❤️</span> by <a style="color: white" href="https://github.com/lapwat/md2mobi">lapwat</a></p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</body>
+	<script>
+		uploadMethodChanged()
+		downloadMethodChanged()
+	</script>
 </html>
