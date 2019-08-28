@@ -22,7 +22,7 @@ class HTTPRequestHandler(server.SimpleHTTPRequestHandler):
       'Messages': [
         {
           "From": {
-            "Email": "q.lapointe@gmail.com",
+            "Email": "md2mobi@lapw.at",
             "Name": "Quentin"
           },
           "To": [
