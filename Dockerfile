@@ -7,6 +7,7 @@ RUN apt-get upgrade
 RUN apt-get update && \
   apt-get install -y --no-install-recommends curl
 
+ADD kindlegen_linux_2.6_i386_v2_9.tar.gz ./
 RUN curl -kL https://github.com/jgm/pandoc/releases/download/${PANDOC_VERSION}/pandoc-${PANDOC_VERSION}-linux.tar.gz | tar xz
 
 FROM python:alpine
@@ -17,8 +18,7 @@ RUN addgroup -S user && adduser -S user -G user
 USER user
 WORKDIR /home/user
 
-ADD kindlegen_linux_2.6_i386_v2_9.tar.gz .
-COPY --from=builder pandoc-${PANDOC_VERSION}/bin/pandoc /usr/local/bin/
+COPY --from=builder pandoc-${PANDOC_VERSION}/bin/pandoc kindlegen /usr/local/bin/
 
 # Python environment
 COPY requirements.txt .
