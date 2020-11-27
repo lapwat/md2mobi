@@ -28,4 +28,5 @@ RUN pip install --user -r requirements.txt
 COPY server.py convert.sh ./
 COPY html html
 
+EXPOSE 8000
 ENTRYPOINT ["python", "server.py"]
